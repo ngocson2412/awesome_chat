@@ -13,6 +13,7 @@ let initRoutes = (app) => {
     router.get("/login", auth.getLogin)
     router.get("/logout", auth.getLogout)
     router.post("/register", authValid.register, auth.postRegister)
+    router.get("/verify/:token",auth.getVerify)
 
     return app.use("/", router)
 }
