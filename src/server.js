@@ -5,6 +5,8 @@ import initRoutes from "./routes/web"
 import bodyParser from "body-parser"
 import connectFash from "connect-flash"
 import configSession from "./config/session"
+import passport from "passport"
+
 // Init app
 let app = express()
 //connect to MongoDB
@@ -22,6 +24,9 @@ app.use(bodyParser.urlencoded({extended: true}))
 //Enable flash messages
 app.use(connectFash())
 
+//config passport
+app.use(passport.initialize())
+app.use(passport.session())
 //Init all routes
 initRoutes(app)
 
