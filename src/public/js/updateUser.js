@@ -42,19 +42,58 @@ function updateUserInfo() {
         }
     })
     $("#input-change-username").bind("change", function(){
-        userInfo.username = $(this).val()
+        let username = $(this).val()
+        let regexUserName = new RegExp("^[\s0-9a-zA-Z_ÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚĂĐĨŨƠàáâãèéêìíòóôõùúăđĩũơƯĂẠẢẤẦẨẪẬẮẰẲẴẶẸẺẼỀỀỂưăạảấầẩẫậắằẳẵặẹẻẽềềểỄỆỈỊỌỎỐỒỔỖỘỚỜỞỠỢỤỦỨỪễệỉịọỏốồổỗộớờởỡợụủứừỬỮỰỲỴÝỶỸửữựỳỵỷỹ ]+$")
+        
+        if(!regexUserName.test(username) || username.length < 3 || username.length > 17) {
+            alertify.notify("Username giới hạn trong khoảng 3-17 kí tự và không được phép chưa kí tự đặc biệt", "error", 7)
+            $(this).val(originUserInfo.username)
+            delete userInfo.userInfo
+            return false
+        }
+        userInfo.username = username
     })
     $("#input-change-gender-male").bind("click", function(){
-        userInfo.gender = $(this).val()
+        let gender = $(this).val()
+        if(gender !== "male") {
+            alertify.notify("Dữ liệu giới tính có vấn đề !!!", "error", 7)
+            $(this).val("male")
+            delete userInfo.gender
+            return false
+        }
+        userInfo.gender = gender
     })
-    $("#input-change-gender-female").bind("change", function(){
-        userInfo.gender = $(this).val()
+    $("#input-change-gender-female").bind("click", function(){
+        let gender = $(this).val()
+        if(gender !== "female") {
+            alertify.notify("Dữ liệu giới tính có vấn đề !!!", "error", 7)
+            $(this).val("female")
+            delete userInfo.gender
+            return false
+        }
+        userInfo.gender = gender
     })
     $("#input-change-address").bind("change", function(){
-        userInfo.address = $(this).val()
+        let address = $(this).val()
+        if(address.length < 3 || address.length > 30) {
+            alertify.notify("Địa chỉ giới hạn trong khoảng 3-30 kí tự", "error", 7)
+            $(this).val(originUserInfo.address)
+            delete userInfo.address
+            return false
+        }
+        userInfo.address = address
     })
     $("#input-change-phone").bind("change", function(){
-        userInfo.phone = $(this).val()
+        let phone = $(this).val()
+        let regexUserName = new RegExp("^(0)[0-9]{9,10}$")
+
+        if(!regexUserName.test(phone)) {
+            alertify.notify("Số điện thoại bắt đầu bằng số 0, giới hạn trong khoảng 10-11 kí tự", "error", 7)
+            $(this).val(originUserInfo.phone)
+            delete userInfo.phone
+            return false
+        }
+        userInfo.phone = phone
     })
 }
 function callUpdateUserAvatar () {
@@ -96,7 +135,10 @@ function callUpdateUserinfo() {
             // update Origin user info    
             originUserInfo = Object.assign(originUserInfo,userInfo)
             
-            //update user name at navbar    
+            //update user name at navbar
+            $("#navbar-username").text(originUserInfo.username)
+
+            //reset all    
             $("#input-btn-cancel-update-user").click()
         },
         error: function(error) {
