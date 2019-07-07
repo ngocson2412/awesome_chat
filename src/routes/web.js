@@ -53,7 +53,7 @@ let initRoutes = (app) => {
 
     router.get("/", auth.checkLoggedIn, home.getHome)
     router.get("/logout", auth.checkLoggedIn, auth.getLogout)
-    router.put("/user/update", auth.checkLoggedIn, user.updateUser)
+    router.put("/user/update-avatar", auth.checkLoggedIn, user.updateUser)
 
     return app.use("/", router)
 }
