@@ -61,7 +61,6 @@ let updateAvatar = (req, res) => {
 
 let updateInfo = async (req, res) => {
     let errorArr = []
-    let successArr = []
 
     let validationErrors = validationResult(req)
     if(!validationErrors.isEmpty()) {
@@ -83,7 +82,33 @@ let updateInfo = async (req, res) => {
         return res.status(500).send(error)
     }
 }
+
+let updatePassword = async (req, res) => {
+    let errorArr = []
+
+    let validationErrors = validationResult(req)
+    if(!validationErrors.isEmpty()) {
+        let errors = Object.values(validationErrors.mapped())
+        errors.forEach(item => {
+            errorArr.push(item.msg)
+        })
+        req.flash("errors", errorArr)
+        return res.status(500).send(errorArr)
+    }
+    try {
+        let updateUserItem = req.body
+        await user.updatePassword(req.user._id, updateUserItem)
+        let result = {
+            message: tranSuccess.user_info_updated
+        }
+        return res.status(200).send(result)
+    } catch (error) {
+        console.log(error)
+        return res.status(500).send(error)
+    }
+}
 module.exports = {
     updateAvatar: updateAvatar,
-    updateInfo: updateInfo
+    updateInfo: updateInfo,
+    updatePassword: updatePassword
 }
