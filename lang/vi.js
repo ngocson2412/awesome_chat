@@ -13,11 +13,13 @@ export const transErrors = {
     account_in_use: "Email này đã được sử dụng.",
     account_removed: "Tài khoản này đã bị gỡ khỏi hệ thống, nếu tin rằng điều này là hiểu nhầm , vui lòng liên hệ với bộ phận hỗ trợ của chúng tôi.",
     account_not_active: "Tài khoản này đã được đăng kí nhưng chưa được active , vui lòng kiểm tra email của bạn hoặc liên hệ với bộ phận hỗ trợ của chúng tôi.",
+    account_underfined: "Tài khoản này không tồn tại",
     token_undefined: "Token không tồn tại!",
     login_failed: "Tài khoản hoặc mật khẩu bị sai!",
     server_error: "Có lỗi ở phía sever, vui lòng liên hệ với bộ phận hỗ trợ để báo cáo lỗi này. Xin cám ơn!",
     avatar_type_error: "Kiểu file không hợp lệ, chỉ chấp nhận jpg & png.",
-    avatar_size_error: "Ảnh upload tối đa cho phép là 1MB"
+    avatar_size_error: "Ảnh upload tối đa cho phép là 1MB",
+    user_current_password_failed: "Mật khẩu hiện tại không chính xác"
 }
 
 export const tranSuccess = {
@@ -30,6 +32,7 @@ export const tranSuccess = {
     },
     logout_successfull: "Đăng xuất tài khoản thành công !",
     user_info_updated: "Cập nhật thông tin người dùng thành công!",
+    user_password_updated: "Cập nhật mật khẩu thành công!"
 }
 
 export const transMail = {

@@ -1,7 +1,6 @@
 import UserModel from "./../models/userModel"
 import bcrypt from "bcrypt"
 import uuid4 from "uuid/v4"
-import { rejects } from "assert";
 import {transErrors} from "./../../lang/vi"
 import {tranSuccess, transMail} from "./../../lang/vi"
 import sendMail from "./../config/mailer"
