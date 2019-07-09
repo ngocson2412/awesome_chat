@@ -169,7 +169,6 @@ function callUpdateUserAvatar () {
         processData: false,
         data: userAvatar,
         success: function(result) {
-            console.log(result)
             $(".user-modal-alert-success").find("span").text(result.message)
             $(".user-modal-alert-success").css("display", "block")
 
@@ -193,7 +192,6 @@ function callUpdateUserInfo() {
         type: "put",
         data: userInfo,
         success: function(result) {
-            console.log(result)
             $(".user-modal-alert-success").find("span").text(result.message)
             $(".user-modal-alert-success").css("display", "block")
             // update Origin user info    
@@ -220,7 +218,6 @@ function callUpdateUserPassword() {
         type: "put",
         data: userUpdatePassword,
         success: function(result) {
-            console.log(result)
             $(".user-modal-password-alert-success").find("span").text(result.message)
             $(".user-modal-password-alert-success").css("display", "block")
 
@@ -245,11 +242,6 @@ $(document).ready(function() {
         gender: ($("#input-change-gender-male").is(":checked")) ? $("#input-change-gender-male").val() : $("#input-change-gender-female").val(),
         address: $("#input-change-address").val(),
         phone: $("#input-change-phone").val()
-    }
-    userUpdatePassword = {
-        currentPassword: $("#input-change-current-password").val(),
-        newPassword: $("#input-change-new-password").val(),
-        confirmNewPassword: $("#input-change-confirm-new-password").val()
     }
     //update userInfo after reset
     updateUserInfo()
