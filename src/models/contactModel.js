@@ -26,6 +26,34 @@ ContactSchema.statics = {
                 {"contactId": userId}
             ]
         }).exec()
+    },
+    /**
+     * check exists of 2 user
+     */
+    checkExists(userId, contactId) {
+        return this.findOne({
+            $or: [
+                {$and: [
+                    {"userId": userId},
+                    {"contactId": contactId}
+                ]},
+                {$and: [
+                    {"userId": contactId},
+                    {"contactId": userId}
+                ]}
+            ]
+        })
+    },
+    /**
+     * Remove request contact
+     */
+    removeRequestContact(userId, contactId) {
+        return this.remove({
+            $and: [
+                {"userId": userId},
+                {"contactId": contactId}
+            ]
+        })
     }
 }
 module.exports = mongoose.model("contact", ContactSchema)
