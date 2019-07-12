@@ -2,22 +2,19 @@ import {pushSocketIdtoArray, emitNotifyArray, removeSoketIdFromArray} from "./..
 /**
  * @param io from socket.jo library
  */
-let addnewContact = (io) => {
+let removeRequestContact = (io) => {
     let clients = {}
     io.on("connection", (socket) => {
         //push socket id to array
         let currentUserId = socket.request.user._id
         clients = pushSocketIdtoArray(clients, currentUserId, socket.id)
 
-        socket.on("add-new-contact", (data) => {
+        socket.on("remove-request-contact", (data) => {
             let currentUser = {
-                id: socket.request.user._id,
-                username: socket.request.user.username,
-                avatar: socket.request.user.avatar,
+                id: socket.request.user._id
             }
-            //emit notification
             if(clients[data.contactId]) {
-                emitNotifyArray(clients, data.contactId, io, "response-add-new-contact", currentUser)           
+                emitNotifyArray(clients, data.contactId, io, "response-remove-request-contact", currentUser)           
             }
         })
 
@@ -27,4 +24,4 @@ let addnewContact = (io) => {
     })
 }
 
-module.exports = addnewContact
+module.exports = removeRequestContact

@@ -1,14 +1,3 @@
-function decreaseNumberNotiContact(className) {
-    let currentValue = +$(`.${className}`).find("em").text() // chuyen string sang number
-    currentValue -=1
-
-    if(currentValue === 0) {
-        $(`.${className}`).html("")
-    }else {
-        $(`.${className}`).html(`(<em>${currentValue}</em>)`)
-    }
-}
-
 function removeRequestContact(){
     $(".user-remove-request-contact").bind("click", function() {
         let tarGetId = $(this).data("uid")
@@ -21,9 +10,21 @@ function removeRequestContact(){
                     $("#find-user").find(`div.user-remove-request-contact[data-uid = ${tarGetId}]`).hide()
                     $("#find-user").find(`div.user-add-new-contact[data-uid = ${tarGetId}]`).css("display","inline-block")
                     decreaseNumberNotiContact("count-request-contact-sent")
-                    // xử lý realtime ở bài sau
+                    
+                    socket.emit("remove-request-contact", {contactId: tarGetId})
                 }
             }
         })
     })
 }
+
+socket.on("response-remove-request-contact", function(user){
+    $(".noti_content").find(`span[data-uid = ${user.id}]`).remove()
+    
+    // xóa ở modal tab ở yêu cầu kết bạn
+
+    decreaseNumberNotiContact("count-request-contact-received")
+
+    decreaseNumberNotification("noti_contact_counter")
+    decreaseNumberNotification("noti_counter")
+})
