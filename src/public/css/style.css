@@ -293,7 +293,7 @@ label:focus,
 }
 
 .noti_counter {
-  display: none;
+  display: block;
   position: absolute;
   background: #E1141E;
   color: #FFF;
@@ -1278,4 +1278,12 @@ label:focus,
 }
 .user-modal-alert-success , .user-modal-alert-error, .user-modal-password-alert-success, .user-modal-password-alert-error {
   display: none
+}
+
+.notif-readed-false {
+  background: #e3e8f0;
+}
+
+.display-none {
+  display: none;
 }

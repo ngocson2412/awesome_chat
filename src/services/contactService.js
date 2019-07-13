@@ -1,5 +1,6 @@
 import ContactModel from "./../models/contactModel"
 import UserModel from "./../models/userModel"
+import NotificationModel from "./../models/notificationModel"
 import _ from "lodash"
 import {transErrors} from "./../../lang/vi"
 
@@ -23,11 +24,21 @@ let addNew = (currentUserId, contactId) => {
         if(contactExists) {
             return rejects(false)
         }
+        //create contact
         let newContactItem = {
             userId: currentUserId,
             contactId:contactId
         }
         let newContact = await ContactModel.createNew(newContactItem)
+
+        // create notification
+        let notificationItem = {
+            senderId: currentUserId,
+            receiverId: contactId,
+            type: NotificationModel.types.ADD_CONTACT,
+        }
+        await NotificationModel.model.createNew(notificationItem)
+
         resolve(newContact)
     })
 }
@@ -38,6 +49,10 @@ let removeRequestContact = (currentUserId, contactId) => {
         if(removeReq.result.n === 0){
             return rejects(false)
         }
+        // remove notìication
+        let notifTypeAddContact = NotificationModel.types.ADD_CONTACT
+        await NotificationModel.model.removeRequestContactNotification(currentUserId, contactId, notifTypeAddContact)
+
         resolve(true)
     })
 }
