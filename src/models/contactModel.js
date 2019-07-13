@@ -42,7 +42,7 @@ ContactSchema.statics = {
                     {"contactId": userId}
                 ]}
             ]
-        })
+        }).exec()
     },
     /**
      * Remove request contact
@@ -53,7 +53,7 @@ ContactSchema.statics = {
                 {"userId": userId},
                 {"contactId": contactId}
             ]
-        })
+        }).exec()
     }
 }
 module.exports = mongoose.model("contact", ContactSchema)
