@@ -19,8 +19,8 @@ function removeRequestContact(){
 }
 
 socket.on("response-remove-request-contact", function(user){
-    $(".noti_content").find(`span[data-uid = ${user.id}]`).remove()
-    
+    $(".noti_content").find(`div[data-uid = ${user.id}]`).remove() //popup notification
+    $("ul.list-notifications").find(`li>div[data-uid = ${user.id}]`).parent().remove() //modal notifiction
     // xóa ở modal tab ở yêu cầu kết bạn
 
     decreaseNumberNotiContact("count-request-contact-received")

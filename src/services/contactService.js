@@ -35,7 +35,7 @@ let addNew = (currentUserId, contactId) => {
         let notificationItem = {
             senderId: currentUserId,
             receiverId: contactId,
-            type: NotificationModel.types.ADD_CONTACT,
+            type: NotificationModel.types,
         }
         await NotificationModel.model.createNew(notificationItem)
 
@@ -50,7 +50,7 @@ let removeRequestContact = (currentUserId, contactId) => {
             return rejects(false)
         }
         // remove notìication
-        let notifTypeAddContact = NotificationModel.types.ADD_CONTACT
+        let notifTypeAddContact = NotificationModel.types
         await NotificationModel.model.removeRequestContactNotification(currentUserId, contactId, notifTypeAddContact)
 
         resolve(true)
