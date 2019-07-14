@@ -25,12 +25,24 @@ NotificationSchema.statics = {
         }).exec()
     },
     /**
-     * get bu userId and limit
+     * get by userId and limit
      * @param {string} userId 
      * @param {number} limit 
      */
     getByUserIdAndLimit(userId , limit) {
         return this.find({"receiverId": userId}).sort({"createdAt": -1}).limit(limit).exec()
+    },
+    /**
+     * get count notification unread
+     * @param {string} userId 
+     */
+    countNotifUnread(userId){
+        return this.count({
+            $and: [
+                {"receiverId": userId},
+                {"isRead": false}
+            ]
+        }).exec()
     }
 }
 
@@ -41,19 +53,19 @@ const NOTIFICATION_CONTENTS = {
     getContent: (notificationType, isRead, userId, userName, userAvatar) => {
         if(notificationType === NOTIFICATION_TYPES.ADD_CONTACT){
             if(!isRead) {
-                return `<span class="notif-readed-false" data-uid="${ userId}">
+                return `<div class="notif-readed-false" data-uid="${ userId}">
                 <img class="avatar-small" src="images/users/${ userAvatar }" alt=""> 
                 <strong>${ userName }</strong> đã gửi cho bạn một lời mời kết bạn!
-                </span><br><br><br>`
+                </div>`
             }
-            return `<span data-uid="${ userId}">
+            return `<div data-uid="${ userId}">
                 <img class="avatar-small" src="images/users/${ userAvatar }" alt=""> 
                 <strong>${ userName }</strong> đã gửi cho bạn một lời mời kết bạn!
-                </span><br><br><br>`
+                </div>`
             
         }
         return "No matching with any notification type"
-    } 
+    }
 }
 module.exports = {
     model: mongoose.model("notification", NotificationSchema),
