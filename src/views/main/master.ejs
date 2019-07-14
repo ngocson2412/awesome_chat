@@ -15,8 +15,8 @@
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body onload="spinLoaded()">
-    <!--Icon loader-->
-    <div id="loader"></div>
+    <!--css main loader-->
+    <div class="master-loader"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div>
     
     <%- include('alert/alert'); %>
 
@@ -49,6 +49,8 @@
     <script src="js/removeRequestContact.js"></script>
     <script src="js/findUersContact.js"></script>
 
+    <script src="js/readMoreNotif.js"></script>
+
     <%- include('contact/contactModal'); %>
 
     <%- include('streaming/streamingModal'); %>
@@ -60,7 +62,7 @@
     <%- include('user/userModal'); %>
 
     <%- include('groupChat/groupChatModal'); %>
-    
+
     <%- include('notification/notificationModal'); %>
     
 </body>
