@@ -54,6 +54,78 @@ ContactSchema.statics = {
                 {"contactId": contactId}
             ]
         }).exec()
-    }
+    },
+    /**
+     * Get contacts by userId and limit
+     */
+    getContacts(userId, limit) {
+        return this.find({
+            $and: [
+                {$or: [
+                    {"userId": userId},
+                    {"contactId": userId}
+                ]},
+                {"status": true}
+            ]
+        }).sort({"createdAt": -1}).limit(limit).exec()
+    },
+    /**
+     * Get contacts sent by userId and limit
+     */
+    getContactsSent(userId, limit) {
+        return this.find({
+            $and: [
+                {"userId": userId},
+                {"status": false}
+            ]
+        }).sort({"createdAt": -1}).limit(limit).exec()
+    },
+    /**
+     * Get contacts received by userId and limit
+     */
+    getContactsReceived(contactId, limit) {
+        return this.find({
+            $and: [
+                {"contactId": contactId},
+                {"status": false}
+            ]
+        }).sort({"createdAt": -1}).limit(limit).exec()
+    },
+    /**
+     * count all contacts by userId and limit
+     */
+    countAllContacts(userId) {
+        return this.count({
+            $and: [
+                {$or: [
+                    {"userId": userId},
+                    {"contactId": userId}
+                ]},
+                {"status": true}
+            ]
+        }).exec()
+    },
+    /**
+     * count all contacts sent by userId and limit
+     */
+    countAllContactsSent(userId) {
+        return this.count({
+            $and: [
+                {"userId": userId},
+                {"status": false}
+            ]
+        }).exec()
+    },
+    /**
+     * count all contacts received by userId and limit
+     */
+    countAllContactsReceived(contactId) {
+        return this.count({
+            $and: [
+                {"contactId": contactId},
+                {"status": false}
+            ]
+        }).exec()
+    },
 }
 module.exports = mongoose.model("contact", ContactSchema)
