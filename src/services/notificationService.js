@@ -14,7 +14,7 @@ let getNotifications = (currentUserId, limit = LIMIT_NUMBER_TAKEN) => {
             let notifications = await NotificationModel.model.getByUserIdAndLimit(currentUserId,limit)
 
             let getNotiContents = notifications.map(async (notification) => {
-                let sender = await UserModel.findUserById(notification.senderId)
+                let sender = await UserModel.getNormalUserDataById(notification.senderId)
                 return NotificationModel.contents.getContent(notification.type, notification.isRead, sender._id, sender.username, sender.avatar)
             })
 
@@ -42,7 +42,7 @@ let countNotifUnread = (currentUserId) => {
 /**
  * Read more notification , max 10 items
  * @param {string} currentUserId 
- * @param {number} currentUserId
+ * @param {number} skipNumberNotif
  */
 let readMore = (currentUserId, skipNumberNotif) => {
     return new Promise(async(resolve, reject) => {
@@ -50,7 +50,7 @@ let readMore = (currentUserId, skipNumberNotif) => {
             let notifications = await NotificationModel.model.readMore(currentUserId, skipNumberNotif, LIMIT_NUMBER_TAKEN)
 
             let getNotiContents = notifications.map(async (notification) => {
-                let sender = await UserModel.findUserById(notification.senderId)
+                let sender = await UserModel.getNormalUserDataById(notification.senderId)
                 return NotificationModel.contents.getContent(notification.type, notification.isRead, sender._id, sender.username, sender.avatar)
             })
 
