@@ -4,13 +4,16 @@ function addContact() {
         $.post("/contact/add-new", {uid: tarGetId}, function(data) {
             if(data.success) {
                 $("#find-user").find(`div.user-add-new-contact[data-uid = ${tarGetId}]`).hide()
-                $("#find-user").find(`div.user-remove-request-contact[data-uid = ${tarGetId}]`).css("display","inline-block")
+                $("#find-user").find(`div.user-remove-request-contact-sent[data-uid = ${tarGetId}]`).css("display","inline-block")
 
                 increaseNumberNotiContact("count-request-contact-sent")
 
                 // thêm ở modal đang chờ xác nhận
                 let userInfoHtml = $("#find-user").find(`ul li[data-uid = ${tarGetId}]`).get(0).outerHTML
                 $("#request-contact-sent").find("ul").prepend(userInfoHtml)
+
+                removeRequestContactSent() //js/removeRequestContactSent.js
+                
                 socket.emit("add-new-contact", {contactId: tarGetId})
             }
         })
@@ -32,7 +35,7 @@ socket.on("response-add-new-contact", function(user){
     increaseNumberNotification("noti_counter", 1)
     
     //thêm ở modal tab yêu cầu kết bạn
-    let userInfoHtml = `<li class="_contactList" data-uid="${user._id}">
+    let userInfoHtml = `<li class="_contactList" data-uid="${user.id}">
                             <div class="contactPanel">
                                 <div class="user-avatar">
                                     <img src="images/users/${ user.avatar}" alt="">
