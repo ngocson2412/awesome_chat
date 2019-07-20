@@ -9,7 +9,10 @@ function removeRequestContactSent(){
                 if(data.success) {
                     $("#find-user").find(`div.user-remove-request-contact-sent[data-uid = ${tarGetId}]`).hide()
                     $("#find-user").find(`div.user-add-new-contact[data-uid = ${tarGetId}]`).css("display","inline-block")
+
                     decreaseNumberNotiContact("count-request-contact-sent")
+                    decreaseNumberNotification("noti_contact_counter", 1)
+                    
                     // xóa ở modal tab trang chờ xác nhận
                     $("#request-contact-sent").find(`li[data-uid = ${tarGetId}]`).remove()
                     socket.emit("remove-request-contact-sent", {contactId: tarGetId})
