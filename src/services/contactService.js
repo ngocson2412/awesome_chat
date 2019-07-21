@@ -38,7 +38,7 @@ let addNew = (currentUserId, contactId) => {
         let notificationItem = {
             senderId: currentUserId,
             receiverId: contactId,
-            type: NotificationModel.types,
+            type: NotificationModel.types.ADD_CONTACT,
         }
         await NotificationModel.model.createNew(notificationItem)
 
@@ -53,7 +53,7 @@ let removeRequestContactSent = (currentUserId, contactId) => {
             return rejects(false)
         }
         // remove notìication
-        let notifTypeAddContact = NotificationModel.types
+        let notifTypeAddContact = NotificationModel.types.ADD_CONTACT
         await NotificationModel.model.removeRequestContactSentNotification(currentUserId, contactId, notifTypeAddContact)
 
         resolve(true)
@@ -67,8 +67,26 @@ let removeRequestContactReceived = (currentUserId, contactId) => {
             return rejects(false)
         }
         // remove notìication
-        // let notifTypeAddContact = NotificationModel.types
+        // let notifTypeAddContact = NotificationModel.types.ADD_CONTACT
         // await NotificationModel.model.removeRequestContactReceivedNotification(currentUserId, contactId, notifTypeAddContact)
+
+        resolve(true)
+    })
+}
+
+let approveRequestContactReceived = (currentUserId, contactId) => {
+    return new Promise(async (resolve,rejects) => {
+        let approveReq = await ContactModel.approveRequestContactReceived(currentUserId, contactId)
+        if(approveReq.nModified === 0){
+            return rejects(false)
+        }
+        // create notfication
+        let notificationItem = {
+            senderId: currentUserId,
+            receiverId: contactId,
+            type: NotificationModel.types.APPROVE_CONTACT,
+        }
+        await NotificationModel.model.createNew(notificationItem)
 
         resolve(true)
     })
@@ -234,6 +252,7 @@ module.exports = {
     addNew: addNew,
     removeRequestContactSent: removeRequestContactSent,
     removeRequestContactReceived: removeRequestContactReceived,
+    approveRequestContactReceived: approveRequestContactReceived,
     getContacts: getContacts,
     getContactsSent: getContactsSent,
     getContactsReceived: getContactsReceived,
