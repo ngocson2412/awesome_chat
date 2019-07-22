@@ -60,6 +60,7 @@ let initRoutes = (app) => {
 
     router.get("/contact/find-users/:keyword", auth.checkLoggedIn, contactValid.findUsersContact, contact.findUsersContact)
     router.post("/contact/add-new", auth.checkLoggedIn, contact.addNew)
+    router.delete("/contact/remove-contact", auth.checkLoggedIn, contact.removeContact)
     router.delete("/contact/remove-resquest-contact-sent", auth.checkLoggedIn, contact.removeRequestContactSent)
     router.delete("/contact/remove-resquest-contact-received", auth.checkLoggedIn, contact.removeRequestContactReceived)
     router.put("/contact/approve-resquest-contact-received", auth.checkLoggedIn, contact.approveRequestContactReceived)
