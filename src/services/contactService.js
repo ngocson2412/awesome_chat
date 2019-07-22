@@ -4,7 +4,7 @@ import NotificationModel from "./../models/notificationModel"
 import _ from "lodash"
 import {transErrors} from "./../../lang/vi"
 
-const LIMIT_NUMBER_TAKEN = 1
+const LIMIT_NUMBER_TAKEN = 10
 
 let findUsersContact = (currentUserId, keyword) => {
     return new Promise(async (resolve,rejects) => {
@@ -46,6 +46,15 @@ let addNew = (currentUserId, contactId) => {
     })
 }
 
+let removeContact = (currentUserId, contactId) => {
+    return new Promise(async (resolve,rejects) => {
+        let removeContact = await ContactModel.removeContact(currentUserId, contactId)
+        if(removeContact.result.n === 0){
+            return rejects(false)
+        }
+        resolve(true)
+    })
+}
 let removeRequestContactSent = (currentUserId, contactId) => {
     return new Promise(async (resolve,rejects) => {
         let removeReq = await ContactModel.removeRequestContactSent(currentUserId, contactId)
@@ -250,6 +259,7 @@ let readMoreContactsReceived = (currentUserId, skipNumberContact) => {
 module.exports = {
     findUsersContact: findUsersContact,
     addNew: addNew,
+    removeContact: removeContact,
     removeRequestContactSent: removeRequestContactSent,
     removeRequestContactReceived: removeRequestContactReceived,
     approveRequestContactReceived: approveRequestContactReceived,

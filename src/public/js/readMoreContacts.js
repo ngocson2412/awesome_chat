@@ -45,6 +45,8 @@ $(document).ready(function() {
 
             $("#link-read-more-contacts").css("display","inline-block")
             $(".read-more-contacts-loader").css("display","none")
+
+            removeContact() // js/removeContact.js
         })
     })
 })

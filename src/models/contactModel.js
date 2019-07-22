@@ -45,6 +45,25 @@ ContactSchema.statics = {
         }).exec()
     },
     /**
+     * Remove contact
+     */
+    removeContact(userId, contactId) {
+        return this.remove({
+            $or: [
+                {$and: [
+                    {"userId": userId},
+                    {"contactId": contactId},
+                    {"status": true}
+                ]},
+                {$and: [
+                    {"userId": contactId},
+                    {"contactId": userId},
+                    {"status": true}
+                ]}
+            ]
+        }).exec()
+    },
+    /**
      * Remove request contact sent
      */
     removeRequestContactSent(userId, contactId) {
