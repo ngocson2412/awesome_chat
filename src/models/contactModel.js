@@ -95,9 +95,12 @@ ContactSchema.statics = {
             $and: [
                 {"userId": contactId},
                 {"contactId": userId},
-                {"status": false}
+                {"status": false},
             ]
-        },{"status": true}).exec()
+        },{
+            "status": true,
+            "updatedAt": Date.now()
+        }).exec()
     },
     /**
      * Get contacts by userId and limit
@@ -111,7 +114,7 @@ ContactSchema.statics = {
                 ]},
                 {"status": true}
             ]
-        }).sort({"createdAt": -1}).limit(limit).exec()
+        }).sort({"updatedAt": -1}).limit(limit).exec()
     },
     /**
      * Get contacts sent by userId and limit
@@ -186,7 +189,7 @@ ContactSchema.statics = {
                 ]},
                 {"status": true}
             ]
-        }).sort({"createdAt": -1}).skip(skip).limit(limit).exec()
+        }).sort({"updatedAt": -1}).skip(skip).limit(limit).exec()
     },
     /**
      * Read more Contact sent , max 10 items
