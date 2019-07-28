@@ -14,12 +14,13 @@ let ChatGroupSchema = new Schema({
     updatedAt: {type: Number, default: Date.now},
     deletedAt: {type: Number, default: null},
 })
-/**
- * get chat group items by userId and limit
- * @param {string}  userId
- * @param {Number}  limit
- */
+
 ChatGroupSchema.statics = {
+    /**
+    * get chat group items by userId and limit
+    * @param {string}  userId
+    * @param {Number}  limit
+    */
     getChatGroups(userId, limit) {
         return this.find({
             "member" : {$elemMatch: {"userId": userId}}

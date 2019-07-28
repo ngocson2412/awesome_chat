@@ -43,9 +43,9 @@ let updateAvatar = (req, res) => {
             let userUpdate = await user.updateUser(req.user._id, updateUserItem)
 
             //Remove old user avatar
-            if(userUpdate.avatar !== "avatar-default.jpg"){
-                await fsExtra.remove(`${app.avatar_directory}/${userUpdate.avatar}`)
-            }
+            // if(userUpdate.avatar !== "avatar-default.jpg"){
+            //     await fsExtra.remove(`${app.avatar_directory}/${userUpdate.avatar}`)
+            // }
 
             let result = {
                 message: tranSuccess.user_info_updated,
