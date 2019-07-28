@@ -1,4 +1,5 @@
 import {notification, contact, message} from "./../services/index"
+import {bufferToBase64} from "./../helpers/clientHelper"
 
 let getHome = async(req, res) => {
     //get only 100 items one time
@@ -23,6 +24,9 @@ let getHome = async(req, res) => {
     let allConversations = getAllConversationItems.allConversations
     let userConversations = getAllConversationItems.userConversations
     let groupConversations = getAllConversationItems.groupConversations
+
+    //get all messages with conversations , max 30 item
+    let allConversationWithMessage = getAllConversationItems.allConversationWithMessage
     
     return res.render("main/home/home", {
         errors:req.flash("errors"),
@@ -38,7 +42,9 @@ let getHome = async(req, res) => {
         countAllContactsReceived: countAllContactsReceived,
         allConversations: allConversations,
         userConversations: userConversations,
-        groupConversations: groupConversations
+        groupConversations: groupConversations,
+        allConversationWithMessage: allConversationWithMessage,
+        bufferToBase64: bufferToBase64
     })
 }
 
